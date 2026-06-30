@@ -9,20 +9,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cream:       #FAF7F2;
-      --cream-dark:  #F0EAE0;
-      --cream-mid:   #E8DFCF;
+      --cream:       #F5F0E8;
+      --cream-dark:  #EDE5D6;
+      --cream-mid:   #E0D8C8;
       --brown-deep:  #1A1208;
       --brown-mid:   #8B5E3C;
       --brown-light: #C49A6C;
-      --gold:        #D4A96A;
-      --gold-light:  #EDD8A8;
-      --overlay:     rgba(20, 13, 5, 0.52);
+      --gold:        #C8903A;
+      --gold-light:  #E8C87A;
+      --dan-red:     #B0291F;
+      --dan-blue:    #1D4E8C;
+      --dan-green:   #2D6E5B;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--cream);
       color: var(--brown-deep);
@@ -36,196 +36,205 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 64px;
+      padding: 24px 64px;
       transition: all 0.5s cubic-bezier(.4,0,.2,1);
     }
     nav.scrolled {
-      background: rgba(250,247,242,0.97);
+      background: rgba(245,240,232,0.97);
       backdrop-filter: blur(16px);
-      padding: 16px 64px;
+      padding: 14px 64px;
       box-shadow: 0 1px 0 rgba(139,94,60,0.12);
     }
     .nav-logo {
       font-family: 'Noto Serif KR', serif;
       font-size: 19px; font-weight: 600;
-      color: #fff; letter-spacing: 0.04em;
-      transition: color 0.4s;
+      color: var(--brown-deep); letter-spacing: 0.04em;
     }
-    nav.scrolled .nav-logo { color: var(--brown-deep); }
-
-    .nav-links { display: flex; gap: 44px; list-style: none; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
     .nav-links a {
       font-size: 12px; letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.88);
-      text-decoration: none;
+      color: var(--brown-mid); text-decoration: none;
       transition: color 0.3s;
     }
-    nav.scrolled .nav-links a { color: var(--brown-mid); }
-    .nav-links a:hover { color: var(--gold); }
-    nav.scrolled .nav-links a:hover { color: var(--brown-deep); }
-
+    .nav-links a:hover { color: var(--brown-deep); }
     .nav-order {
       padding: 10px 24px;
-      border: 1px solid rgba(255,255,255,0.45);
+      border: 1px solid var(--brown-mid);
       font-size: 11px; letter-spacing: 0.18em;
-      color: #fff; text-decoration: none;
+      color: var(--brown-mid); text-decoration: none;
       transition: all 0.3s;
     }
-    nav.scrolled .nav-order {
-      border-color: var(--brown-mid);
-      color: var(--brown-mid);
-    }
-    .nav-order:hover {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: var(--brown-deep);
-    }
+    .nav-order:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
 
-    /* ── HERO + STORY COMBINED ── */
-    .hero-combined {
-      position: relative;
-      display: flex; flex-direction: column;
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 52% 48%;
+      min-height: 50vh;
       overflow: hidden;
     }
-    .hero-video-wrap {
-      position: absolute; inset: 0; overflow: hidden;
-      background: var(--brown-deep);
-    }
-    .hero-video-wrap iframe {
-      position: absolute;
-      top: 50%; left: 50%;
-      width: max(100%, 177.78vh);
-      height: max(100%, 56.25vw);
-      transform: translate(-50%, -50%);
-      border: none; pointer-events: none;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(20,13,5,0.25) 0%,
-        rgba(20,13,5,0.5)  45%,
-        rgba(20,13,5,0.82) 100%
-      );
-    }
-
-    /* Upper: hero content */
-    .hero-upper {
-      position: relative; z-index: 2;
-      min-height: 100vh;
+    .hero-left {
+      position: relative;
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; color: #fff;
-      padding: 120px 24px 100px;
+      justify-content: center;
+      padding: 80px 60px 60px 80px;
+      background: var(--cream-dark);
+      overflow: hidden;
     }
+    /* 창살 격자 배경 패턴 */
+    .hero-left::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='%23A89070' stroke-width='0.8' opacity='0.22'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    /* 단청 세로 색 바 (왼쪽) */
+    .hero-dancheng {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 7px; display: flex; flex-direction: column;
+    }
+    .hero-dancheng span { flex: 1; }
+    .hero-dancheng span:nth-child(1) { background: var(--dan-red); }
+    .hero-dancheng span:nth-child(2) { background: var(--dan-blue); }
+    .hero-dancheng span:nth-child(3) { background: var(--dan-green); }
+    .hero-dancheng span:nth-child(4) { background: var(--gold); }
+    .hero-dancheng span:nth-child(5) { background: var(--dan-red); }
+    /* 단청 가로 장식선 */
+    .hero-deco-bar {
+      display: flex; height: 4px; gap: 4px;
+      width: 72px; margin-bottom: 30px;
+    }
+    .hero-deco-bar span:nth-child(1) { flex: 2; background: var(--dan-red); }
+    .hero-deco-bar span:nth-child(2) { flex: 1; background: var(--dan-blue); }
+    .hero-deco-bar span:nth-child(3) { flex: 1; background: var(--dan-green); }
+    .hero-deco-bar span:nth-child(4) { flex: 2; background: var(--gold); }
+
     .hero-label {
-      display: inline-block;
-      font-size: 10px; letter-spacing: 0.35em;
-      color: var(--gold-light); margin-bottom: 24px;
+      display: block; font-size: 10px; letter-spacing: 0.35em;
+      color: var(--brown-mid); margin-bottom: 20px;
     }
     .hero-title {
       font-family: 'Noto Serif KR', serif;
-      font-size: clamp(44px, 6.5vw, 88px);
-      font-weight: 300; line-height: 1.18;
-      letter-spacing: -0.01em; margin-bottom: 22px;
+      font-size: clamp(26px, 2.8vw, 44px);
+      font-weight: 300; line-height: 1.25;
+      color: var(--brown-deep); margin-bottom: 14px;
     }
-    .hero-title strong {
-      display: block; font-weight: 700;
-      background: linear-gradient(135deg, var(--gold-light), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    .hero-title strong { display: block; font-weight: 700; color: var(--brown-mid); }
     .hero-sub {
-      font-size: 15px; font-weight: 300;
-      letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.78);
-      margin-bottom: 56px;
+      font-size: 13px; font-weight: 300;
+      color: rgba(26,18,8,0.55);
+      margin-bottom: 32px; letter-spacing: 0.03em;
     }
-    .hero-actions { display: flex; gap: 16px; justify-content: center; align-items: center; }
+    .hero-actions { display: flex; gap: 16px; }
     .btn-gold {
       display: inline-block; padding: 16px 40px;
-      background: var(--gold); color: var(--brown-deep);
+      background: var(--gold); color: #fff;
       font-size: 12px; font-weight: 500; letter-spacing: 0.18em;
       text-decoration: none; transition: all 0.3s;
     }
-    .btn-gold:hover { background: var(--gold-light); }
+    .btn-gold:hover { background: var(--dan-red); }
     .btn-outline {
       display: inline-block; padding: 15px 36px;
-      border: 1px solid rgba(255,255,255,0.5); color: #fff;
+      border: 1px solid rgba(139,94,60,0.4); color: var(--brown-mid);
       font-size: 12px; letter-spacing: 0.18em;
       text-decoration: none; transition: all 0.3s;
     }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-outline:hover { border-color: var(--brown-deep); color: var(--brown-deep); }
 
-    .scroll-cue {
-      position: absolute; bottom: 40px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      z-index: 3;
+    /* 오른쪽: 제품 사진 4컷 콜라주 */
+    .hero-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
     }
-    .scroll-cue span { font-size: 9px; letter-spacing: 0.3em; color: rgba(255,255,255,0.55); }
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
-      animation: scrollDown 2s ease-in-out infinite;
-    }
-    @keyframes scrollDown {
-      0%,100% { transform: scaleY(1); opacity: 0.5; }
-      50%      { transform: scaleY(0.5); opacity: 1; }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
 
-    /* Lower: story strip (still inside the video section) */
-    .story-strip {
-      position: relative; z-index: 2;
+    /* ── VIDEO SECTION ── */
+    .video-section {
+      padding: 100px 80px;
+      background: var(--cream-dark);
+      text-align: center;
+    }
+    .video-frame {
+      max-width: 860px;
+      margin: 52px auto 0;
+    }
+    /* 단청 4색 테두리 */
+    .video-frame-border {
+      padding: 5px;
+      background: linear-gradient(to right,
+        var(--dan-red) 25%,
+        var(--dan-blue) 25% 50%,
+        var(--dan-green) 50% 75%,
+        var(--gold) 75%);
+    }
+    .video-frame-border iframe {
+      display: block; width: 100%;
+      aspect-ratio: 16/9; border: none;
+      background: #000;
+    }
+
+    /* ── STORY SECTION ── */
+    .story-section {
+      background: var(--brown-deep);
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: center;
-      padding: 80px 100px 100px;
-      background: rgba(8, 5, 2, 0.68);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(212,169,106,0.2);
+      padding: 90px 100px 100px;
     }
-    .story-strip-text .section-label { color: var(--gold); }
-    .story-strip-text .section-title { color: #fff; margin-bottom: 18px; }
-    .story-strip-text p {
+    .story-text .section-label { color: var(--gold); }
+    .story-text .section-title { color: #fff; }
+    .story-text p {
       font-size: 15px; line-height: 2.1;
       color: rgba(255,255,255,0.65); margin-bottom: 16px;
     }
-    .story-strip-facts {
+    .story-facts {
       display: flex; align-items: center;
-      justify-content: center; gap: 0;
+      justify-content: center;
     }
     .fact-divider {
       width: 1px; height: 56px;
-      background: rgba(212,169,106,0.25); flex-shrink: 0;
+      background: rgba(200,144,58,0.25); flex-shrink: 0;
     }
     .fact-item { text-align: center; padding: 0 44px; }
     .fact-num {
       font-family: 'Playfair Display', serif;
       font-size: 48px; font-weight: 700;
-      color: #fff; display: block; line-height: 1;
-      margin-bottom: 8px;
+      color: #fff; display: block; line-height: 1; margin-bottom: 8px;
     }
     .fact-label {
       font-size: 11px; letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.5); margin-top: 4px;
+      color: rgba(255,255,255,0.5);
     }
 
-    /* ── COMMON SECTION ── */
+    /* ── COMMON ── */
+    .section-label {
+      font-size: 10px; letter-spacing: 0.35em;
+      color: var(--brown-mid); margin-bottom: 10px;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 300; line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .gold-line {
+      width: 48px; height: 1px;
+      background: var(--gold); margin-bottom: 28px;
+    }
 
     /* ── PRODUCTS ── */
-    .products {
-      padding: 110px 80px;
-      background: var(--cream);
-    }
+    .products { padding: 110px 80px; background: var(--cream); }
     .products-header {
       display: flex; align-items: flex-end;
       justify-content: space-between; margin-bottom: 56px;
     }
     .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
     }
     .product-card {
       position: relative; overflow: hidden;
@@ -239,52 +248,41 @@
     .product-card:hover img { transform: scale(1.07); }
     .product-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(20,13,5,0.88) 0%,
-        rgba(20,13,5,0.1) 55%,
-        transparent 100%
-      );
+      background: linear-gradient(to top, rgba(20,13,5,.88) 0%, rgba(20,13,5,.1) 55%, transparent 100%);
       display: flex; flex-direction: column;
       justify-content: flex-end; padding: 28px 24px;
       transition: background 0.4s;
     }
     .product-card:hover .product-overlay {
-      background: linear-gradient(
-        to top,
-        rgba(20,13,5,0.92) 0%,
-        rgba(20,13,5,0.35) 60%,
-        rgba(20,13,5,0.1) 100%
-      );
+      background: linear-gradient(to top, rgba(20,13,5,.92) 0%, rgba(20,13,5,.35) 60%, rgba(20,13,5,.1) 100%);
     }
     .product-name {
       font-family: 'Noto Serif KR', serif;
-      font-size: 20px; font-weight: 600;
-      color: #fff; margin-bottom: 4px;
+      font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 4px;
     }
     .product-name-en {
       font-family: 'Playfair Display', serif;
       font-size: 12px; font-style: italic;
-      color: var(--gold); letter-spacing: 0.05em;
-      margin-bottom: 12px;
+      color: var(--gold-light); letter-spacing: 0.05em; margin-bottom: 10px;
     }
     .product-desc {
-      font-size: 12px; line-height: 1.6;
-      color: rgba(255,255,255,0.65);
+      font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.65);
       max-height: 0; overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.4s;
-      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.4s; opacity: 0;
     }
-    .product-card:hover .product-desc {
-      max-height: 60px; opacity: 1;
+    .product-card:hover .product-desc { max-height: 60px; opacity: 1; }
+    .product-detail-link {
+      display: inline-block; margin-top: 10px;
+      font-size: 10px; letter-spacing: 0.2em;
+      color: var(--gold-light); text-decoration: none;
+      opacity: 0; transition: opacity 0.4s 0.1s;
     }
+    .product-card:hover .product-detail-link { opacity: 1; }
     .product-tag {
       position: absolute; top: 20px; right: 20px;
-      padding: 5px 12px;
-      background: var(--gold);
+      padding: 5px 12px; background: var(--dan-red);
       font-size: 10px; font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--brown-deep);
+      letter-spacing: 0.1em; color: #fff;
     }
 
     /* ── DETAIL SPOTLIGHT ── */
@@ -293,17 +291,12 @@
       display: grid; grid-template-columns: 1fr 1fr;
       min-height: 680px;
     }
-    .detail-image-wrap {
-      position: relative; overflow: hidden;
-    }
+    .detail-image-wrap { position: relative; overflow: hidden; }
     .detail-image-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: brightness(0.85);
+      width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);
     }
     .detail-image-wrap::after {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(to right, transparent 60%, var(--brown-deep));
     }
     .detail-content {
@@ -312,9 +305,7 @@
     }
     .detail-content .section-label { color: var(--gold); }
     .detail-content .section-title { color: #fff; }
-    .detail-content .gold-line {
-      background: linear-gradient(to right, var(--gold), transparent);
-    }
+    .detail-content .gold-line { background: linear-gradient(to right, var(--gold), transparent); }
     .detail-desc {
       font-size: 15px; line-height: 2.1;
       color: rgba(255,255,255,0.68); margin-bottom: 44px;
@@ -323,196 +314,65 @@
     .ingredients-block h4 {
       font-family: 'Noto Serif KR', serif;
       font-size: 14px; font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.06em; margin-bottom: 16px;
+      color: var(--gold); letter-spacing: 0.06em; margin-bottom: 16px;
     }
     .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .tag {
       padding: 6px 16px;
       border: 1px solid rgba(212,169,106,0.35);
       font-size: 12px; letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.78);
-      transition: all 0.3s;
+      color: rgba(255,255,255,0.78); transition: all 0.3s;
     }
     .tag:hover { border-color: var(--gold); color: var(--gold); }
     .tag.allergy {
       border-color: rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.45);
-      font-size: 11px;
+      color: rgba(255,255,255,0.45); font-size: 11px;
     }
-
-    /* ── NUTRITION ── */
-    .nutrition {
-      padding: 110px 80px;
-      background: var(--cream-dark);
-    }
-    .nutrition-header {
-      margin-bottom: 56px;
-    }
-    .nutrition-note {
-      font-size: 12px;
-      color: var(--brown-light);
-      letter-spacing: 0.06em;
-      margin-top: -20px; margin-bottom: 40px;
-    }
-    .tabs {
-      display: flex; gap: 0;
-      border-bottom: 1px solid rgba(139,94,60,0.18);
-      margin-bottom: 40px; overflow-x: auto;
-    }
-    .tab-btn {
-      padding: 13px 28px;
-      background: none; border: none;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 13px; letter-spacing: 0.08em;
-      color: var(--brown-light); cursor: pointer;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: all 0.3s; white-space: nowrap;
-    }
-    .tab-btn:hover { color: var(--brown-mid); }
-    .tab-btn.active {
-      color: var(--brown-mid);
-      border-bottom-color: var(--gold);
-    }
-
-    .nutrition-panel { display: none; }
-    .nutrition-panel.active { display: block; }
-
-    .nutrition-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 60px; align-items: start;
-    }
-    .nutrition-summary {
-      background: var(--brown-deep);
-      padding: 40px 32px; color: #fff;
-    }
-    .nutrition-summary h3 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 22px; font-weight: 600;
-      color: var(--gold); margin-bottom: 6px;
-    }
-    .nutrition-summary .en {
-      font-family: 'Playfair Display', serif;
-      font-size: 13px; font-style: italic;
-      color: rgba(255,255,255,0.5); margin-bottom: 24px;
-    }
-    .kcal-display {
-      font-family: 'Playfair Display', serif;
-      font-size: 52px; font-weight: 700;
-      color: #fff; line-height: 1;
-    }
-    .kcal-label {
-      font-size: 11px; letter-spacing: 0.15em;
-      color: var(--gold); margin-bottom: 24px;
-    }
-    .summary-serving {
-      font-size: 11px; color: rgba(255,255,255,0.4);
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 20px; letter-spacing: 0.06em;
-    }
-
-    .nutrition-table-wrap { overflow-x: auto; }
-    table {
-      width: 100%; border-collapse: collapse;
-    }
-    thead th {
-      padding: 12px 20px;
-      font-size: 10px; letter-spacing: 0.2em;
-      color: var(--brown-light);
-      border-bottom: 1px solid rgba(139,94,60,0.18);
-      text-align: left;
-    }
-    tbody td {
-      padding: 15px 20px;
-      font-size: 14px; color: var(--brown-deep);
-      border-bottom: 1px solid rgba(139,94,60,0.07);
-    }
-    tbody tr:last-child td { border-bottom: none; }
-    tbody td:first-child { font-weight: 500; }
-    .bar-wrap {
-      display: flex; align-items: center; gap: 10px;
-    }
-    .bar-track {
-      flex: 1; height: 3px;
-      background: rgba(139,94,60,0.12);
-      border-radius: 2px; overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%; background: var(--gold);
-      border-radius: 2px; opacity: 0.7;
-    }
-    .pct { font-size: 12px; color: var(--brown-light); }
 
     /* ── CTA ── */
-    .cta {
-      background: var(--brown-mid);
-      text-align: center; padding: 100px 60px;
-    }
+    .cta { background: var(--brown-mid); text-align: center; padding: 100px 60px; }
     .cta .section-label { color: rgba(255,255,255,0.55); }
     .cta .section-title { color: #fff; }
-    .cta-desc {
-      font-size: 15px; color: rgba(255,255,255,0.72);
-      margin-bottom: 16px;
-    }
+    .cta-desc { font-size: 15px; color: rgba(255,255,255,0.72); margin-bottom: 16px; }
     .cta-note {
       font-size: 12px; letter-spacing: 0.08em;
       color: rgba(255,255,255,0.45); margin-bottom: 48px;
     }
     .cta-actions { display: flex; gap: 16px; justify-content: center; }
     .btn-light {
-      display: inline-block;
-      padding: 18px 48px;
-      background: var(--cream);
-      color: var(--brown-mid);
-      font-size: 12px; font-weight: 500;
-      letter-spacing: 0.15em;
-      text-decoration: none;
-      transition: all 0.3s;
+      display: inline-block; padding: 18px 48px;
+      background: var(--cream); color: var(--brown-mid);
+      font-size: 12px; font-weight: 500; letter-spacing: 0.15em;
+      text-decoration: none; transition: all 0.3s;
     }
-    .btn-light:hover { background: var(--gold); color: var(--brown-deep); }
+    .btn-light:hover { background: var(--gold); color: #fff; }
     .btn-trans {
-      display: inline-block;
-      padding: 17px 40px;
+      display: inline-block; padding: 17px 40px;
       border: 1px solid rgba(255,255,255,0.4);
       color: #fff; font-size: 12px;
-      letter-spacing: 0.15em; text-decoration: none;
-      transition: all 0.3s;
+      letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s;
     }
     .btn-trans:hover { border-color: var(--gold-light); color: var(--gold-light); }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--brown-deep);
-      padding: 72px 80px 40px;
-    }
+    footer { background: var(--brown-deep); padding: 72px 80px 40px; }
     .footer-top {
       display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
       gap: 60px; margin-bottom: 60px;
     }
     .footer-brand-name {
       font-family: 'Noto Serif KR', serif;
-      font-size: 22px; color: #fff;
-      margin-bottom: 10px;
+      font-size: 22px; color: #fff; margin-bottom: 10px;
     }
     .footer-brand-sub {
       font-size: 12px; letter-spacing: 0.08em;
       color: rgba(255,255,255,0.35); margin-bottom: 24px;
     }
-    .footer-brand-desc {
-      font-size: 13px; line-height: 2;
-      color: rgba(255,255,255,0.38);
-    }
-    .footer-col h5 {
-      font-size: 10px; letter-spacing: 0.25em;
-      color: var(--gold); margin-bottom: 20px;
-    }
+    .footer-brand-desc { font-size: 13px; line-height: 2; color: rgba(255,255,255,0.38); }
+    .footer-col h5 { font-size: 10px; letter-spacing: 0.25em; color: var(--gold); margin-bottom: 20px; }
     .footer-col a, .footer-col p {
       display: block; font-size: 13px;
-      color: rgba(255,255,255,0.42);
-      text-decoration: none; line-height: 2.2;
-      transition: color 0.3s;
+      color: rgba(255,255,255,0.42); text-decoration: none; line-height: 2.2; transition: color 0.3s;
     }
     .footer-col a:hover { color: rgba(255,255,255,0.75); }
     .footer-bottom {
@@ -520,125 +380,97 @@
       padding-top: 28px;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .footer-copy {
-      font-size: 12px; letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.2);
-    }
-    .footer-cert {
-      font-size: 11px; color: rgba(255,255,255,0.18);
-      letter-spacing: 0.06em;
-    }
+    .footer-copy { font-size: 12px; letter-spacing: 0.06em; color: rgba(255,255,255,0.2); }
+    .footer-cert { font-size: 11px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; }
 
     /* ── ANIMATIONS ── */
-    .reveal {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity 0.85s ease, transform 0.85s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.85s ease, transform 0.85s ease; }
     .reveal.in { opacity: 1; transform: none; }
     .reveal-d1 { transition-delay: 0.1s; }
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
     .reveal-d4 { transition-delay: 0.4s; }
     .reveal-d5 { transition-delay: 0.5s; }
-    .reveal-d6 { transition-delay: 0.6s; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
       nav { padding: 20px 28px; }
       nav.scrolled { padding: 14px 28px; }
-      .story-strip { grid-template-columns: 1fr; padding: 60px 40px 70px; gap: 48px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 40vw; }
+      .hero-left { padding: 60px 40px 48px 52px; }
+      .story-section { grid-template-columns: 1fr; padding: 60px 40px 70px; gap: 48px; }
       .detail { grid-template-columns: 1fr; }
       .detail-image-wrap { min-height: 360px; }
       .products-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .video-section { padding: 80px 40px; }
     }
     @media (max-width: 640px) {
       nav .nav-links { display: none; }
+      .hero-left { padding: 52px 20px 40px 32px; }
+      .hero-right { height: 56vw; }
       .products-grid { grid-template-columns: 1fr; }
-      .nutrition-grid { grid-template-columns: 1fr; }
       .footer-top { grid-template-columns: 1fr; }
-      .story-strip { padding: 50px 24px 60px; }
-      .fact-num { font-size: 36px; }
-      .fact-item { padding: 0 28px; }
       .products { padding: 80px 24px; }
-      .nutrition { padding: 80px 24px; }
       .cta { padding: 80px 24px; }
       footer { padding: 60px 24px 32px; }
+      .video-section { padding: 60px 24px; }
+      .story-section { padding: 60px 24px; }
+      .fact-num { font-size: 36px; }
+      .fact-item { padding: 0 28px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ════════════ NAVIGATION ════════════ -->
+<!-- ════════════ NAV ════════════ -->
 <nav id="nav">
   <div class="nav-logo">한결 떡방</div>
   <ul class="nav-links">
     <li><a href="#story">브랜드</a></li>
     <li><a href="#products">제품</a></li>
     <li><a href="#detail">재료</a></li>
-    <li><a href="#nutrition">영양성분</a></li>
   </ul>
   <a href="#order" class="nav-order">주문하기</a>
 </nav>
 
-<!-- ════════════ HERO + STORY COMBINED ════════════ -->
-<section class="hero-combined" id="hero">
-  <div class="hero-video-wrap">
-    <!--
-      ★ 영상 교체: src의 "jfKfPfyJRdk" 두 곳을 YouTube 영상 ID로 변경하세요
-    -->
-    <iframe
-      src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1"
-      frameborder="0"
-      allow="autoplay; encrypted-media; fullscreen"
-      allowfullscreen>
-    </iframe>
-  </div>
-  <div class="hero-overlay"></div>
-
-  <!-- ① 상단: 풀스크린 히어로 -->
-  <div class="hero-upper">
+<!-- ════════════ HERO ════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-dancheng"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="hero-deco-bar"><span></span><span></span><span></span><span></span></div>
     <span class="hero-label">SINCE 1987 · 국내산 재료 100%</span>
-    <h1 class="hero-title">
-      정성으로 빚는<br>
-      <strong>전통의 맛</strong>
-    </h1>
+    <h1 class="hero-title">정성으로 빚는<br><strong>전통의 맛</strong></h1>
     <p class="hero-sub">자연에서 온 재료로, 손으로 빚은 한 입의 행복</p>
     <div class="hero-actions">
       <a href="#products" class="btn-gold">제품 보기</a>
       <a href="#story" class="btn-outline">브랜드 스토리</a>
     </div>
-    <div class="scroll-cue">
-      <span>SCROLL</span>
-      <div class="scroll-line"></div>
-    </div>
   </div>
+  <div class="hero-right">
+    <img src="images/injeolmi.png" alt="인절미" style="object-position:center 40%;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg" alt="약식">
+    <img src="images/baekseolgi.png" alt="백설기">
+    <img src="images/gyultteok.png" alt="꿀떡">
+  </div>
+</section>
 
-  <!-- ② 하단: 브랜드 스토리 스트립 -->
-  <div class="story-strip" id="story">
-    <div class="story-strip-text">
-      <span class="section-label reveal">OUR STORY</span>
-      <h2 class="section-title reveal reveal-d1">세 대를 이어온<br>떡의 철학</h2>
-      <div class="gold-line reveal reveal-d2" style="background:linear-gradient(to right,var(--gold),transparent);"></div>
-      <p class="reveal reveal-d2">한결 떡방은 1987년 할머니의 손맛에서 시작되었습니다. 인공 첨가물 없이 오직 국내산 찹쌀과 자연 재료만을 사용해 하루하루 직접 빚습니다.</p>
-      <p class="reveal reveal-d3">시대가 바뀌어도 변하지 않는 것은 단 하나, 정성입니다. 방부제 없이 당일 생산하며, 익일 새벽 배송을 원칙으로 합니다.</p>
-    </div>
-    <div class="story-strip-facts reveal reveal-d2">
-      <div class="fact-item">
-        <span class="fact-num">37</span>
-        <div class="fact-label">년의 전통</div>
-      </div>
-      <div class="fact-divider"></div>
-      <div class="fact-item">
-        <span class="fact-num">100</span>
-        <div class="fact-label">% 국내산</div>
-      </div>
-      <div class="fact-divider"></div>
-      <div class="fact-item">
-        <span class="fact-num">0</span>
-        <div class="fact-label">방부제 첨가</div>
-      </div>
-    </div>
+<!-- ════════════ STORY ════════════ -->
+<section class="story-section" id="story">
+  <div class="story-text">
+    <span class="section-label reveal">OUR STORY</span>
+    <h2 class="section-title reveal reveal-d1">세 대를 이어온<br>떡의 철학</h2>
+    <div class="gold-line reveal reveal-d2" style="background:linear-gradient(to right,var(--gold),transparent);"></div>
+    <p class="reveal reveal-d2">한결 떡방은 1987년 할머니의 손맛에서 시작되었습니다. 인공 첨가물 없이 오직 국내산 찹쌀과 자연 재료만을 사용해 하루하루 직접 빚습니다.</p>
+    <p class="reveal reveal-d3">시대가 바뀌어도 변하지 않는 것은 단 하나, 정성입니다. 방부제 없이 당일 생산하며, 익일 새벽 배송을 원칙으로 합니다.</p>
+  </div>
+  <div class="story-facts reveal reveal-d2">
+    <div class="fact-item"><span class="fact-num">37</span><div class="fact-label">년의 전통</div></div>
+    <div class="fact-divider"></div>
+    <div class="fact-item"><span class="fact-num">100</span><div class="fact-label">% 국내산</div></div>
+    <div class="fact-divider"></div>
+    <div class="fact-item"><span class="fact-num">0</span><div class="fact-label">방부제 첨가</div></div>
   </div>
 </section>
 
@@ -650,71 +482,63 @@
       <h2 class="section-title reveal reveal-d1">엄선된 전통 떡</h2>
       <div class="gold-line reveal reveal-d2"></div>
     </div>
-    <p class="reveal" style="font-size:13px;color:var(--brown-light);max-width:260px;text-align:right;line-height:1.9;">
-      계절에 따라 다른 재료로<br>빚어내는 열두 달 떡 이야기
-    </p>
+    <p class="reveal" style="font-size:13px;color:var(--brown-light);max-width:260px;text-align:right;line-height:1.9;">계절에 따라 다른 재료로<br>빚어내는 열두 달 떡 이야기</p>
   </div>
-
   <div class="products-grid">
-    <!-- 인절미 -->
     <div class="product-card reveal">
-      <img src="images/injeolmi.png" alt="인절미" style="object-position: center 40%;">
+      <img src="images/injeolmi.png" alt="인절미" style="object-position:center 40%;">
       <div class="product-overlay">
         <div class="product-name">인절미</div>
         <div class="product-name-en">Injeolmi</div>
         <p class="product-desc">볶은 콩가루를 넉넉히 입혀 고소하고 쫀득한 찹쌀 떡</p>
+        <a href="products/injeolmi.html" class="product-detail-link">상세 보기 →</a>
       </div>
       <span class="product-tag">BEST</span>
     </div>
-
-    <!-- 백설기 -->
     <div class="product-card reveal reveal-d1">
-      <img src="images/baekseolgi.png" alt="백설기" style="object-position: center 50%;">
+      <img src="images/baekseolgi.png" alt="백설기">
       <div class="product-overlay">
         <div class="product-name">백설기</div>
         <div class="product-name-en">Baekseolgi</div>
         <p class="product-desc">백옥처럼 희고 부드러운 순수한 쌀가루 찜 떡</p>
+        <a href="products/baekseolgi.html" class="product-detail-link">상세 보기 →</a>
       </div>
     </div>
-
-    <!-- 꿀떡 -->
     <div class="product-card reveal reveal-d2">
-      <img src="images/gyultteok.png" alt="꿀떡" style="object-position: center 50%;">
+      <img src="images/gyultteok.png" alt="꿀떡">
       <div class="product-overlay">
         <div class="product-name">꿀떡</div>
         <div class="product-name-en">Gyultteok</div>
         <p class="product-desc">꿀을 가득 품은 알록달록 한 입 크기 찹쌀 떡</p>
+        <a href="products/gyultteok.html" class="product-detail-link">상세 보기 →</a>
       </div>
       <span class="product-tag">NEW</span>
     </div>
-
-    <!-- 송편 -->
     <div class="product-card reveal reveal-d3">
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Korea_Chuseok_Songpyeon_01.jpg" alt="송편">
       <div class="product-overlay">
         <div class="product-name">송편</div>
         <div class="product-name-en">Songpyeon</div>
         <p class="product-desc">솔잎 향기로 찐 반달 모양의 추석 대표 떡</p>
+        <a href="products/songpyeon.html" class="product-detail-link">상세 보기 →</a>
       </div>
     </div>
-
-    <!-- 약식 -->
     <div class="product-card reveal reveal-d4">
       <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg" alt="약식">
       <div class="product-overlay">
         <div class="product-name">약식</div>
         <div class="product-name-en">Yaksik</div>
         <p class="product-desc">잣·밤·대추를 품은 달콤 진한 찹쌀 영양 떡</p>
+        <a href="products/yaksik.html" class="product-detail-link">상세 보기 →</a>
       </div>
     </div>
-
-    <!-- 쑥인절미 -->
     <div class="product-card reveal reveal-d5">
-      <img src="images/ssuk-injeolmi.png" alt="쑥인절미" style="object-position: center 50%; background:#f5f0e8;">
+      <img src="images/ssuk-injeolmi.png" alt="쑥인절미" style="object-position:center 50%;">
       <div class="product-overlay">
         <div class="product-name">쑥인절미</div>
         <div class="product-name-en">Ssuk Injeolmi</div>
         <p class="product-desc">봄 쑥을 넣어 쫄깃하고 향긋한 초록빛 인절미</p>
+        <a href="products/ssuk-injeolmi.html" class="product-detail-link">상세 보기 →</a>
       </div>
       <span class="product-tag">봄 한정</span>
     </div>
@@ -730,33 +554,22 @@
     <span class="section-label reveal">SIGNATURE — 약식</span>
     <h2 class="section-title reveal reveal-d1">달콤한 영양이<br>가득한 전통 별미</h2>
     <div class="gold-line reveal reveal-d2"></div>
-    <p class="detail-desc reveal reveal-d2">
-      찹쌀에 잣·밤·대추를 넣고 참기름과 간장, 흑설탕으로 깊은 맛을 더한 뒤 오랜 시간 쪄냅니다. 달콤하고 쫄깃한 식감 속에 견과류의 고소함이 어우러지는 한국의 대표 보양 떡입니다.
-    </p>
-
+    <p class="detail-desc reveal reveal-d2">찹쌀에 잣·밤·대추를 넣고 참기름과 간장, 흑설탕으로 깊은 맛을 더한 뒤 오랜 시간 쪄냅니다. 달콤하고 쫄깃한 식감 속에 견과류의 고소함이 어우러지는 한국의 대표 보양 떡입니다.</p>
     <div class="ingredients-block reveal reveal-d3">
       <h4>주요 재료</h4>
       <div class="tag-list">
-        <span class="tag">국내산 찹쌀</span>
-        <span class="tag">밤</span>
-        <span class="tag">대추</span>
-        <span class="tag">잣</span>
-        <span class="tag">참기름</span>
-        <span class="tag">국간장</span>
-        <span class="tag">흑설탕</span>
+        <span class="tag">국내산 찹쌀</span><span class="tag">밤</span><span class="tag">대추</span>
+        <span class="tag">잣</span><span class="tag">참기름</span><span class="tag">국간장</span><span class="tag">흑설탕</span>
       </div>
     </div>
-
     <div class="ingredients-block reveal reveal-d4">
       <h4>알레르기 정보</h4>
       <div class="tag-list">
         <span class="tag allergy">견과류(잣·밤) 함유</span>
         <span class="tag allergy">대두(간장) 함유</span>
-        <span class="tag allergy">글루텐 불포함</span>
         <span class="tag allergy">방부제 무첨가</span>
       </div>
     </div>
-
     <div class="ingredients-block reveal reveal-d5">
       <h4>보관 방법</h4>
       <div class="tag-list">
@@ -768,215 +581,13 @@
   </div>
 </section>
 
-<!-- ════════════ NUTRITION ════════════ -->
-<section class="nutrition" id="nutrition">
-  <div class="nutrition-header">
-    <span class="section-label reveal">NUTRITION FACTS</span>
-    <h2 class="section-title reveal reveal-d1">영양성분표</h2>
-    <div class="gold-line reveal reveal-d2"></div>
-  </div>
-  <p class="nutrition-note reveal">* 1회 제공량 기준 100g · 수치는 평균값이며 실제와 다소 차이가 있을 수 있습니다</p>
-
-  <div class="tabs reveal">
-    <button class="tab-btn active" onclick="switchTab('injeolmi', this)">인절미</button>
-    <button class="tab-btn" onclick="switchTab('baekseolgi', this)">백설기</button>
-    <button class="tab-btn" onclick="switchTab('gyultteok', this)">꿀떡</button>
-    <button class="tab-btn" onclick="switchTab('songpyeon', this)">송편</button>
-    <button class="tab-btn" onclick="switchTab('yaksik', this)">약식</button>
-    <button class="tab-btn" onclick="switchTab('ssuk', this)">쑥인절미</button>
-  </div>
-
-  <!-- 인절미 -->
-  <div class="nutrition-panel active" id="panel-injeolmi">
-    <div class="nutrition-grid">
-      <div class="nutrition-summary">
-        <h3>인절미</h3>
-        <div class="en">Injeolmi</div>
-        <div class="kcal-display">198</div>
-        <div class="kcal-label">kcal / 100g</div>
-        <div class="summary-serving">1회 제공량 · 100g 기준</div>
-      </div>
-      <div class="nutrition-table-wrap">
-        <table>
-          <thead><tr><th>영양소</th><th>함량</th><th>일일권장량 (%)</th><th style="width:180px"></th></tr></thead>
-          <tbody>
-            <tr><td>탄수화물</td><td>42g</td><td class="pct">13%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div></div></td></tr>
-            <tr><td>당류</td><td>8g</td><td class="pct">8%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:30%"></div></div></div></td></tr>
-            <tr><td>단백질</td><td>5g</td><td class="pct">9%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div></div></td></tr>
-            <tr><td>지방</td><td>2.5g</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div></div></td></tr>
-            <tr><td>포화지방</td><td>0.4g</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div></div></td></tr>
-            <tr><td>나트륨</td><td>85mg</td><td class="pct">4%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div></div></td></tr>
-            <tr><td>식이섬유</td><td>1.2g</td><td class="pct">5%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div></div></td></tr>
-            <tr><td>칼슘</td><td>18mg</td><td class="pct">2%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:7%"></div></div></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- 백설기 -->
-  <div class="nutrition-panel" id="panel-baekseolgi">
-    <div class="nutrition-grid">
-      <div class="nutrition-summary">
-        <h3>백설기</h3>
-        <div class="en">Baekseolgi</div>
-        <div class="kcal-display">210</div>
-        <div class="kcal-label">kcal / 100g</div>
-        <div class="summary-serving">1회 제공량 · 100g 기준</div>
-      </div>
-      <div class="nutrition-table-wrap">
-        <table>
-          <thead><tr><th>영양소</th><th>함량</th><th>일일권장량 (%)</th><th style="width:180px"></th></tr></thead>
-          <tbody>
-            <tr><td>탄수화물</td><td>46g</td><td class="pct">14%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div></div></td></tr>
-            <tr><td>당류</td><td>10g</td><td class="pct">10%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div></div></td></tr>
-            <tr><td>단백질</td><td>3g</td><td class="pct">5%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div></div></td></tr>
-            <tr><td>지방</td><td>1g</td><td class="pct">1%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div></div></td></tr>
-            <tr><td>포화지방</td><td>0.2g</td><td class="pct">1%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div></div></td></tr>
-            <tr><td>나트륨</td><td>60mg</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:11%"></div></div></div></td></tr>
-            <tr><td>식이섬유</td><td>0.5g</td><td class="pct">2%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div></div></td></tr>
-            <tr><td>칼슘</td><td>12mg</td><td class="pct">1%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- 꿀떡 -->
-  <div class="nutrition-panel" id="panel-gyultteok">
-    <div class="nutrition-grid">
-      <div class="nutrition-summary">
-        <h3>꿀떡</h3>
-        <div class="en">Gyultteok</div>
-        <div class="kcal-display">215</div>
-        <div class="kcal-label">kcal / 100g</div>
-        <div class="summary-serving">1회 제공량 · 100g 기준</div>
-      </div>
-      <div class="nutrition-table-wrap">
-        <table>
-          <thead><tr><th>영양소</th><th>함량</th><th>일일권장량 (%)</th><th style="width:180px"></th></tr></thead>
-          <tbody>
-            <tr><td>탄수화물</td><td>45g</td><td class="pct">14%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:56%"></div></div></div></td></tr>
-            <tr><td>당류</td><td>18g</td><td class="pct">18%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></div></td></tr>
-            <tr><td>단백질</td><td>3g</td><td class="pct">5%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div></div></td></tr>
-            <tr><td>지방</td><td>1.5g</td><td class="pct">2%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:7%"></div></div></div></td></tr>
-            <tr><td>포화지방</td><td>0.3g</td><td class="pct">2%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:6%"></div></div></div></td></tr>
-            <tr><td>나트륨</td><td>65mg</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div></div></td></tr>
-            <tr><td>식이섬유</td><td>0.5g</td><td class="pct">2%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div></div></td></tr>
-            <tr><td>칼슘</td><td>10mg</td><td class="pct">1%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- 송편 -->
-  <div class="nutrition-panel" id="panel-songpyeon">
-    <div class="nutrition-grid">
-      <div class="nutrition-summary">
-        <h3>송편</h3>
-        <div class="en">Songpyeon</div>
-        <div class="kcal-display">185</div>
-        <div class="kcal-label">kcal / 100g</div>
-        <div class="summary-serving">1회 제공량 · 100g 기준</div>
-      </div>
-      <div class="nutrition-table-wrap">
-        <table>
-          <thead><tr><th>영양소</th><th>함량</th><th>일일권장량 (%)</th><th style="width:180px"></th></tr></thead>
-          <tbody>
-            <tr><td>탄수화물</td><td>38g</td><td class="pct">12%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:47%"></div></div></div></td></tr>
-            <tr><td>당류</td><td>12g</td><td class="pct">12%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div></div></td></tr>
-            <tr><td>단백질</td><td>4g</td><td class="pct">7%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div></div></td></tr>
-            <tr><td>지방</td><td>2g</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div></div></td></tr>
-            <tr><td>포화지방</td><td>0.5g</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div></div></td></tr>
-            <tr><td>나트륨</td><td>55mg</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div></div></td></tr>
-            <tr><td>식이섬유</td><td>1.5g</td><td class="pct">6%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div></div></td></tr>
-            <tr><td>칼슘</td><td>30mg</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:11%"></div></div></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- 약식 -->
-  <div class="nutrition-panel" id="panel-yaksik">
-    <div class="nutrition-grid">
-      <div class="nutrition-summary">
-        <h3>약식</h3>
-        <div class="en">Yaksik</div>
-        <div class="kcal-display">260</div>
-        <div class="kcal-label">kcal / 100g</div>
-        <div class="summary-serving">1회 제공량 · 100g 기준</div>
-      </div>
-      <div class="nutrition-table-wrap">
-        <table>
-          <thead><tr><th>영양소</th><th>함량</th><th>일일권장량 (%)</th><th style="width:180px"></th></tr></thead>
-          <tbody>
-            <tr><td>탄수화물</td><td>52g</td><td class="pct">16%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></div></td></tr>
-            <tr><td>당류</td><td>22g</td><td class="pct">22%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div></div></td></tr>
-            <tr><td>단백질</td><td>4.5g</td><td class="pct">8%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:32%"></div></div></div></td></tr>
-            <tr><td>지방</td><td>5g</td><td class="pct">7%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:26%"></div></div></div></td></tr>
-            <tr><td>포화지방</td><td>0.8g</td><td class="pct">5%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div></div></td></tr>
-            <tr><td>나트륨</td><td>120mg</td><td class="pct">6%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div></div></td></tr>
-            <tr><td>식이섬유</td><td>2g</td><td class="pct">8%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div></div></td></tr>
-            <tr><td>칼슘</td><td>45mg</td><td class="pct">5%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- 쑥인절미 -->
-  <div class="nutrition-panel" id="panel-ssuk">
-    <div class="nutrition-grid">
-      <div class="nutrition-summary">
-        <h3>쑥인절미</h3>
-        <div class="en">Ssuk Injeolmi</div>
-        <div class="kcal-display">210</div>
-        <div class="kcal-label">kcal / 100g</div>
-        <div class="summary-serving">1회 제공량 · 100g 기준</div>
-      </div>
-      <div class="nutrition-table-wrap">
-        <table>
-          <thead><tr><th>영양소</th><th>함량</th><th>일일권장량 (%)</th><th style="width:180px"></th></tr></thead>
-          <tbody>
-            <tr><td>탄수화물</td><td>40g</td><td class="pct">12%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:50%"></div></div></div></td></tr>
-            <tr><td>당류</td><td>9g</td><td class="pct">9%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div></div></td></tr>
-            <tr><td>단백질</td><td>5g</td><td class="pct">9%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div></div></td></tr>
-            <tr><td>지방</td><td>3g</td><td class="pct">4%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div></div></td></tr>
-            <tr><td>포화지방</td><td>0.5g</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div></div></td></tr>
-            <tr><td>나트륨</td><td>75mg</td><td class="pct">4%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div></div></td></tr>
-            <tr><td>식이섬유</td><td>1.8g</td><td class="pct">7%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div></div></td></tr>
-            <tr><td>칼슘</td><td>25mg</td><td class="pct">3%</td><td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:9%"></div></div></div></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ CTA ════════════ -->
-<section class="cta" id="order">
-  <span class="section-label reveal">ORDER NOW</span>
-  <h2 class="section-title reveal reveal-d1">지금 주문하세요</h2>
-  <p class="cta-desc reveal reveal-d2">당일 생산 · 방부제 무첨가 · 전국 새벽 배송</p>
-  <p class="cta-note reveal reveal-d3">최소 주문 1박스 · 2인 이상 선물세트 제공 · 기업 단체 주문 상담 가능</p>
-  <div class="cta-actions reveal reveal-d4">
-    <a href="tel:02-0000-0000" class="btn-light">전화 주문 · 02-0000-0000</a>
-    <a href="mailto:hello@hangyeol.kr" class="btn-trans">이메일 문의</a>
-  </div>
-</section>
-
 <!-- ════════════ FOOTER ════════════ -->
 <footer>
   <div class="footer-top">
     <div>
       <div class="footer-brand-name">한결 떡방</div>
       <div class="footer-brand-sub">HANGYEOL TTEOKBANG</div>
-      <p class="footer-brand-desc">
-        1987년부터 이어온 전통 방식으로<br>
-        매일 아침 신선하게 빚어내는 정직한 떡
-      </p>
+      <p class="footer-brand-desc">1987년부터 이어온 전통 방식으로<br>매일 아침 신선하게 빚어내는 정직한 떡</p>
     </div>
     <div class="footer-col">
       <h5>VISIT</h5>
@@ -994,47 +605,30 @@
       <a href="#story">브랜드 스토리</a>
       <a href="#products">제품 소개</a>
       <a href="#detail">재료 & 성분</a>
-      <a href="#nutrition">영양성분표</a>
       <a href="#order">주문하기</a>
     </div>
   </div>
   <div class="footer-bottom">
     <span class="footer-copy">© 2024 한결 떡방. All rights reserved.</span>
-    <span class="footer-cert">식품안전관리인증 HACCP 인증 | 사업자등록번호 000-00-00000</span>
+    <span class="footer-cert">식품안전관리인증 HACCP | 사업자등록번호 000-00-00000</span>
   </div>
-  <div style="padding:16px 80px;background:var(--brown-deep);border-top:1px solid rgba(255,255,255,0.04);">
+  <div style="padding:14px 80px;background:var(--brown-deep);border-top:1px solid rgba(255,255,255,0.04);">
     <p style="font-size:10px;color:rgba(255,255,255,0.18);line-height:1.9;letter-spacing:0.04em;">
-      Photo credits (Wikimedia Commons) —
-      인절미: AI Generated (Google Gemini) &nbsp;|&nbsp;
-      백설기: AI Generated (Google Gemini) &nbsp;|&nbsp;
-      꿀떡: AI Generated (Google Gemini) &nbsp;|&nbsp;
+      Photo credits — 인절미·백설기·꿀떡·쑥인절미: AI Generated (Google Gemini) &nbsp;|&nbsp;
       송편: Ministry of Culture, Sports and Tourism (Korea), CC BY-SA 2.0 &nbsp;|&nbsp;
-      약식: Hyeon-Jeong Suk, CC BY 2.0 &nbsp;|&nbsp;
-      쑥인절미: AI Generated (Google Gemini)
+      약식: Hyeon-Jeong Suk, CC BY 2.0
     </p>
   </div>
 </footer>
 
 <script>
-  // ── Nav scroll
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-
-  // ── Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.12 });
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+    { threshold: 0.12 }
+  );
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // ── Nutrition tabs
-  function switchTab(id, btn) {
-    document.querySelectorAll('.nutrition-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('panel-' + id).classList.add('active');
-    btn.classList.add('active');
-  }
 </script>
 </body>
 </html>
