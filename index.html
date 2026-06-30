@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,628 +7,407 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Noto Serif KR"', '"Playfair Display"', 'serif'],
+            sans:  ['"Noto Sans KR"', 'sans-serif'],
+            mono:  ['"Noto Sans KR"', 'monospace'],
+          },
+          colors: {
+            ivory:     '#F9F7F3',
+            'ivory-d': '#EDE5D6',
+            dbrown:    '#1E1611',
+            cbrown:    '#2C221E',
+            gold:      '#C68A4C',
+            'gold-d':  '#B2763A',
+          },
+          transitionDuration: { 700: '700ms' }
+        }
+      }
+    }
+  </script>
   <style>
-    :root {
-      --cream:       #F5F0E8;
-      --cream-dark:  #EDE5D6;
-      --cream-mid:   #E0D8C8;
-      --brown-deep:  #1A1208;
-      --brown-mid:   #8B5E3C;
-      --brown-light: #C49A6C;
-      --gold:        #C8903A;
-      --gold-light:  #E8C87A;
-      --dan-red:     #B0291F;
-      --dan-blue:    #1D4E8C;
-      --dan-green:   #2D6E5B;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--cream);
-      color: var(--brown-deep);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 300;
-      line-height: 1.75;
-      overflow-x: hidden;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 24px 64px;
-      transition: all 0.5s cubic-bezier(.4,0,.2,1);
-    }
-    nav.scrolled {
-      background: rgba(245,240,232,0.97);
-      backdrop-filter: blur(16px);
-      padding: 14px 64px;
-      box-shadow: 0 1px 0 rgba(139,94,60,0.12);
-    }
-    .nav-logo {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 19px; font-weight: 600;
-      color: var(--brown-deep); letter-spacing: 0.04em;
-    }
-    .nav-links { display: flex; gap: 40px; list-style: none; }
-    .nav-links a {
-      font-size: 12px; letter-spacing: 0.14em;
-      color: var(--brown-mid); text-decoration: none;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--brown-deep); }
-    .nav-order {
-      padding: 10px 24px;
-      border: 1px solid var(--brown-mid);
-      font-size: 11px; letter-spacing: 0.18em;
-      color: var(--brown-mid); text-decoration: none;
-      transition: all 0.3s;
-    }
-    .nav-order:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
-
-    /* ── HERO ── */
-    .hero {
-      display: grid;
-      grid-template-columns: 52% 48%;
-      min-height: 50vh;
-      overflow: hidden;
-    }
-    .hero-left {
-      position: relative;
-      display: flex; flex-direction: column;
-      justify-content: center;
-      padding: 80px 60px 60px 80px;
-      background: var(--cream-dark);
-      overflow: hidden;
-    }
-    /* 창살 격자 배경 패턴 */
-    .hero-left::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='%23A89070' stroke-width='0.8' opacity='0.22'/%3E%3C/svg%3E");
-      pointer-events: none;
-    }
-    /* 단청 세로 색 바 (왼쪽) */
-    .hero-dancheng {
-      position: absolute; left: 0; top: 0; bottom: 0;
-      width: 7px; display: flex; flex-direction: column;
-    }
-    .hero-dancheng span { flex: 1; }
-    .hero-dancheng span:nth-child(1) { background: var(--dan-red); }
-    .hero-dancheng span:nth-child(2) { background: var(--dan-blue); }
-    .hero-dancheng span:nth-child(3) { background: var(--dan-green); }
-    .hero-dancheng span:nth-child(4) { background: var(--gold); }
-    .hero-dancheng span:nth-child(5) { background: var(--dan-red); }
-    /* 단청 가로 장식선 */
-    .hero-deco-bar {
-      display: flex; height: 4px; gap: 4px;
-      width: 72px; margin-bottom: 30px;
-    }
-    .hero-deco-bar span:nth-child(1) { flex: 2; background: var(--dan-red); }
-    .hero-deco-bar span:nth-child(2) { flex: 1; background: var(--dan-blue); }
-    .hero-deco-bar span:nth-child(3) { flex: 1; background: var(--dan-green); }
-    .hero-deco-bar span:nth-child(4) { flex: 2; background: var(--gold); }
-
-    .hero-label {
-      display: block; font-size: 10px; letter-spacing: 0.35em;
-      color: var(--brown-mid); margin-bottom: 20px;
-    }
-    .hero-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: clamp(26px, 2.8vw, 44px);
-      font-weight: 300; line-height: 1.25;
-      color: var(--brown-deep); margin-bottom: 14px;
-    }
-    .hero-title strong { display: block; font-weight: 700; color: var(--brown-mid); }
-    .hero-sub {
-      font-size: 13px; font-weight: 300;
-      color: rgba(26,18,8,0.55);
-      margin-bottom: 32px; letter-spacing: 0.03em;
-    }
-    .hero-actions { display: flex; gap: 16px; }
-    .btn-gold {
-      display: inline-block; padding: 16px 40px;
-      background: var(--gold); color: #fff;
-      font-size: 12px; font-weight: 500; letter-spacing: 0.18em;
-      text-decoration: none; transition: all 0.3s;
-    }
-    .btn-gold:hover { background: var(--dan-red); }
-    .btn-outline {
-      display: inline-block; padding: 15px 36px;
-      border: 1px solid rgba(139,94,60,0.4); color: var(--brown-mid);
-      font-size: 12px; letter-spacing: 0.18em;
-      text-decoration: none; transition: all 0.3s;
-    }
-    .btn-outline:hover { border-color: var(--brown-deep); color: var(--brown-deep); }
-
-    /* 오른쪽: 제품 사진 4컷 콜라주 */
-    .hero-right {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 3px;
-    }
-    .hero-right img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
-
-    /* ── VIDEO SECTION ── */
-    .video-section {
-      padding: 100px 80px;
-      background: var(--cream-dark);
-      text-align: center;
-    }
-    .video-frame {
-      max-width: 860px;
-      margin: 52px auto 0;
-    }
-    /* 단청 4색 테두리 */
-    .video-frame-border {
-      padding: 5px;
+    *, *::before, *::after { box-sizing: border-box; }
+    body { font-family: 'Noto Sans KR', sans-serif; }
+    .fs  { font-family: 'Noto Serif KR', serif; }
+    .fp  { font-family: 'Playfair Display', serif; }
+    .dancheong {
       background: linear-gradient(to right,
-        var(--dan-red) 25%,
-        var(--dan-blue) 25% 50%,
-        var(--dan-green) 50% 75%,
-        var(--gold) 75%);
+        #B0291F 0 28%, #1D4E8C 28% 44%, #2D6E5B 44% 60%, #C68A4C 60% 100%);
+      height: 4px; width: 72px; border-radius: 1px;
     }
-    .video-frame-border iframe {
-      display: block; width: 100%;
-      aspect-ratio: 16/9; border: none;
-      background: #000;
-    }
-
-    /* ── STORY SECTION ── */
-    .story-section {
-      background: var(--brown-deep);
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 80px; align-items: center;
-      padding: 90px 100px 100px;
-    }
-    .story-text .section-label { color: var(--gold); }
-    .story-text .section-title { color: #fff; }
-    .story-text p {
-      font-size: 15px; line-height: 2.1;
-      color: rgba(255,255,255,0.65); margin-bottom: 16px;
-    }
-    .story-facts {
-      display: flex; align-items: center;
-      justify-content: center;
-    }
-    .fact-divider {
-      width: 1px; height: 56px;
-      background: rgba(200,144,58,0.25); flex-shrink: 0;
-    }
-    .fact-item { text-align: center; padding: 0 44px; }
-    .fact-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px; font-weight: 700;
-      color: #fff; display: block; line-height: 1; margin-bottom: 8px;
-    }
-    .fact-label {
-      font-size: 11px; letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.5);
-    }
-
-    /* ── COMMON ── */
-    .section-label {
-      font-size: 10px; letter-spacing: 0.35em;
-      color: var(--brown-mid); margin-bottom: 10px;
-      display: block;
-    }
-    .section-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: clamp(28px, 3.5vw, 48px);
-      font-weight: 300; line-height: 1.3;
-      margin-bottom: 16px;
-    }
-    .gold-line {
-      width: 48px; height: 1px;
-      background: var(--gold); margin-bottom: 28px;
-    }
-
-    /* ── PRODUCTS ── */
-    .products { padding: 110px 80px; background: var(--cream); }
-    .products-header {
-      display: flex; align-items: flex-end;
-      justify-content: space-between; margin-bottom: 56px;
-    }
-    .products-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
-    }
-    .product-card {
-      position: relative; overflow: hidden;
-      aspect-ratio: 4/5; cursor: pointer;
-      background: var(--cream-mid);
-    }
-    .product-card img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.7s cubic-bezier(.4,0,.2,1);
-    }
-    .product-card:hover img { transform: scale(1.07); }
-    .product-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(20,13,5,.88) 0%, rgba(20,13,5,.1) 55%, transparent 100%);
-      display: flex; flex-direction: column;
-      justify-content: flex-end; padding: 28px 24px;
-      transition: background 0.4s;
-    }
-    .product-card:hover .product-overlay {
-      background: linear-gradient(to top, rgba(20,13,5,.92) 0%, rgba(20,13,5,.35) 60%, rgba(20,13,5,.1) 100%);
-    }
-    .product-name {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 4px;
-    }
-    .product-name-en {
-      font-family: 'Playfair Display', serif;
-      font-size: 12px; font-style: italic;
-      color: var(--gold-light); letter-spacing: 0.05em; margin-bottom: 10px;
-    }
-    .product-desc {
-      font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.65);
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.4s ease, opacity 0.4s; opacity: 0;
-    }
-    .product-card:hover .product-desc { max-height: 60px; opacity: 1; }
-    .product-detail-link {
-      display: inline-block; margin-top: 10px;
-      font-size: 10px; letter-spacing: 0.2em;
-      color: var(--gold-light); text-decoration: none;
-      opacity: 0; transition: opacity 0.4s 0.1s;
-    }
-    .product-card:hover .product-detail-link { opacity: 1; }
-    .product-tag {
-      position: absolute; top: 20px; right: 20px;
-      padding: 5px 12px; background: var(--dan-red);
-      font-size: 10px; font-weight: 500;
-      letter-spacing: 0.1em; color: #fff;
-    }
-
-    /* ── DETAIL SPOTLIGHT ── */
-    .detail {
-      background: var(--brown-deep);
-      display: grid; grid-template-columns: 1fr 1fr;
-      min-height: 680px;
-    }
-    .detail-image-wrap { position: relative; overflow: hidden; }
-    .detail-image-wrap img {
-      width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85);
-    }
-    .detail-image-wrap::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to right, transparent 60%, var(--brown-deep));
-    }
-    .detail-content {
-      padding: 90px 72px 90px 56px;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .detail-content .section-label { color: var(--gold); }
-    .detail-content .section-title { color: #fff; }
-    .detail-content .gold-line { background: linear-gradient(to right, var(--gold), transparent); }
-    .detail-desc {
-      font-size: 15px; line-height: 2.1;
-      color: rgba(255,255,255,0.68); margin-bottom: 44px;
-    }
-    .ingredients-block { margin-bottom: 36px; }
-    .ingredients-block h4 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 14px; font-weight: 600;
-      color: var(--gold); letter-spacing: 0.06em; margin-bottom: 16px;
-    }
-    .tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      padding: 6px 16px;
-      border: 1px solid rgba(212,169,106,0.35);
-      font-size: 12px; letter-spacing: 0.06em;
-      color: rgba(255,255,255,0.78); transition: all 0.3s;
-    }
-    .tag:hover { border-color: var(--gold); color: var(--gold); }
-    .tag.allergy {
-      border-color: rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.45); font-size: 11px;
-    }
-
-    /* ── CTA ── */
-    .cta { background: var(--brown-mid); text-align: center; padding: 100px 60px; }
-    .cta .section-label { color: rgba(255,255,255,0.55); }
-    .cta .section-title { color: #fff; }
-    .cta-desc { font-size: 15px; color: rgba(255,255,255,0.72); margin-bottom: 16px; }
-    .cta-note {
-      font-size: 12px; letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.45); margin-bottom: 48px;
-    }
-    .cta-actions { display: flex; gap: 16px; justify-content: center; }
-    .btn-light {
-      display: inline-block; padding: 18px 48px;
-      background: var(--cream); color: var(--brown-mid);
-      font-size: 12px; font-weight: 500; letter-spacing: 0.15em;
-      text-decoration: none; transition: all 0.3s;
-    }
-    .btn-light:hover { background: var(--gold); color: #fff; }
-    .btn-trans {
-      display: inline-block; padding: 17px 40px;
-      border: 1px solid rgba(255,255,255,0.4);
-      color: #fff; font-size: 12px;
-      letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s;
-    }
-    .btn-trans:hover { border-color: var(--gold-light); color: var(--gold-light); }
-
-    /* ── FOOTER ── */
-    footer { background: var(--brown-deep); padding: 72px 80px 40px; }
-    .footer-top {
-      display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
-      gap: 60px; margin-bottom: 60px;
-    }
-    .footer-brand-name {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 22px; color: #fff; margin-bottom: 10px;
-    }
-    .footer-brand-sub {
-      font-size: 12px; letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.35); margin-bottom: 24px;
-    }
-    .footer-brand-desc { font-size: 13px; line-height: 2; color: rgba(255,255,255,0.38); }
-    .footer-col h5 { font-size: 10px; letter-spacing: 0.25em; color: var(--gold); margin-bottom: 20px; }
-    .footer-col a, .footer-col p {
-      display: block; font-size: 13px;
-      color: rgba(255,255,255,0.42); text-decoration: none; line-height: 2.2; transition: color 0.3s;
-    }
-    .footer-col a:hover { color: rgba(255,255,255,0.75); }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 28px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .footer-copy { font-size: 12px; letter-spacing: 0.06em; color: rgba(255,255,255,0.2); }
-    .footer-cert { font-size: 11px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; }
-
-    /* ── ANIMATIONS ── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.85s ease, transform 0.85s ease; }
-    .reveal.in { opacity: 1; transform: none; }
-    .reveal-d1 { transition-delay: 0.1s; }
-    .reveal-d2 { transition-delay: 0.2s; }
-    .reveal-d3 { transition-delay: 0.3s; }
-    .reveal-d4 { transition-delay: 0.4s; }
-    .reveal-d5 { transition-delay: 0.5s; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
-      nav { padding: 20px 28px; }
-      nav.scrolled { padding: 14px 28px; }
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { height: 40vw; }
-      .hero-left { padding: 60px 40px 48px 52px; }
-      .story-section { grid-template-columns: 1fr; padding: 60px 40px 70px; gap: 48px; }
-      .detail { grid-template-columns: 1fr; }
-      .detail-image-wrap { min-height: 360px; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-      .video-section { padding: 80px 40px; }
-    }
-    @media (max-width: 640px) {
-      nav .nav-links { display: none; }
-      .hero-left { padding: 52px 20px 40px 32px; }
-      .hero-right { height: 56vw; }
-      .products-grid { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      .products { padding: 80px 24px; }
-      .cta { padding: 80px 24px; }
-      footer { padding: 60px 24px 32px; }
-      .video-section { padding: 60px 24px; }
-      .story-section { padding: 60px 24px; }
-      .fact-num { font-size: 36px; }
-      .fact-item { padding: 0 28px; }
+    .gold-hr { width: 48px; height: 1px;
+      background: linear-gradient(to right, #C68A4C, transparent); }
+    .card-img-film {
+      background-image: url('images/story-bg.png');
+      background-size: 500% auto;
+      background-repeat: no-repeat;
     }
   </style>
 </head>
-<body>
+<body class="antialiased bg-ivory text-cbrown">
+<div id="root"></div>
 
-<!-- ════════════ NAV ════════════ -->
-<nav id="nav">
-  <div class="nav-logo">한결 떡방</div>
-  <ul class="nav-links">
-    <li><a href="#story">브랜드</a></li>
-    <li><a href="#products">제품</a></li>
-    <li><a href="#detail">재료</a></li>
-  </ul>
-  <a href="#order" class="nav-order">주문하기</a>
-</nav>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<!-- ════════════ HERO ════════════ -->
-<section class="hero" id="hero">
-  <div class="hero-left">
-    <div class="hero-dancheng"><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="hero-deco-bar"><span></span><span></span><span></span><span></span></div>
-    <span class="hero-label">SINCE 1987 · 국내산 재료 100%</span>
-    <h1 class="hero-title">정성으로 빚는<br><strong>전통의 맛</strong></h1>
-    <p class="hero-sub">자연에서 온 재료로, 손으로 빚은 한 입의 행복</p>
-    <div class="hero-actions">
-      <a href="#products" class="btn-gold">제품 보기</a>
-      <a href="#story" class="btn-outline">브랜드 스토리</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <img src="images/injeolmi.png" alt="인절미" style="object-position:center 40%;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg" alt="약식">
-    <img src="images/baekseolgi.png" alt="백설기">
-    <img src="images/gyultteok.png" alt="꿀떡">
-  </div>
-</section>
+<script type="text/babel">
+const { useState, useEffect } = React;
 
-<!-- ════════════ STORY ════════════ -->
-<section class="story-section" id="story">
-  <div class="story-text">
-    <span class="section-label reveal">OUR STORY</span>
-    <h2 class="section-title reveal reveal-d1">세 대를 이어온<br>떡의 철학</h2>
-    <div class="gold-line reveal reveal-d2" style="background:linear-gradient(to right,var(--gold),transparent);"></div>
-    <p class="reveal reveal-d2">한결 떡방은 1987년 할머니의 손맛에서 시작되었습니다. 인공 첨가물 없이 오직 국내산 찹쌀과 자연 재료만을 사용해 하루하루 직접 빚습니다.</p>
-    <p class="reveal reveal-d3">시대가 바뀌어도 변하지 않는 것은 단 하나, 정성입니다. 방부제 없이 당일 생산하며, 익일 새벽 배송을 원칙으로 합니다.</p>
-  </div>
-  <div class="story-facts reveal reveal-d2">
-    <div class="fact-item"><span class="fact-num">37</span><div class="fact-label">년의 전통</div></div>
-    <div class="fact-divider"></div>
-    <div class="fact-item"><span class="fact-num">100</span><div class="fact-label">% 국내산</div></div>
-    <div class="fact-divider"></div>
-    <div class="fact-item"><span class="fact-num">0</span><div class="fact-label">방부제 첨가</div></div>
-  </div>
-</section>
-
-<!-- ════════════ PRODUCTS ════════════ -->
-<section class="products" id="products">
-  <div class="products-header">
-    <div>
-      <span class="section-label reveal">PREMIUM SELECTION</span>
-      <h2 class="section-title reveal reveal-d1">엄선된 전통 떡</h2>
-      <div class="gold-line reveal reveal-d2"></div>
-    </div>
-    <p class="reveal" style="font-size:13px;color:var(--brown-light);max-width:260px;text-align:right;line-height:1.9;">계절에 따라 다른 재료로<br>빚어내는 열두 달 떡 이야기</p>
-  </div>
-  <div class="products-grid">
-    <div class="product-card reveal">
-      <img src="images/injeolmi.png" alt="인절미" style="object-position:center 40%;">
-      <div class="product-overlay">
-        <div class="product-name">인절미</div>
-        <div class="product-name-en">Injeolmi</div>
-        <p class="product-desc">볶은 콩가루를 넉넉히 입혀 고소하고 쫀득한 찹쌀 떡</p>
-        <a href="products/injeolmi.html" class="product-detail-link">상세 보기 →</a>
+/* ──────────────────────── HEADER ──────────────────────── */
+function Header() {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+  return (
+    <header className={`w-full fixed top-0 z-50 transition-all duration-500
+      ${scrolled ? 'bg-ivory/97 shadow-sm border-b border-stone-200' : 'bg-ivory/90'}
+      backdrop-blur-sm`}>
+      <div className="max-w-7xl mx-auto px-8 lg:px-16 py-4 flex justify-between items-center">
+        <span className="fs font-bold text-xl text-cbrown tracking-wide">한결 떡방</span>
+        <nav className="hidden md:flex space-x-10 text-sm font-medium text-stone-500">
+          {[['#story','브랜드'],['#products','제품'],['#detail','재료']].map(([h,t])=>(
+            <a key={h} href={h}
+              className="hover:text-gold transition-colors duration-300 tracking-wide">{t}</a>
+          ))}
+        </nav>
+        <a href="mailto:hello@hangyeol.kr"
+          className="hidden md:inline text-xs tracking-[0.18em] border border-gold
+            text-gold px-5 py-2 hover:bg-gold hover:text-white transition-all duration-300">
+          주문하기
+        </a>
       </div>
-      <span class="product-tag">BEST</span>
-    </div>
-    <div class="product-card reveal reveal-d1">
-      <img src="images/baekseolgi.png" alt="백설기">
-      <div class="product-overlay">
-        <div class="product-name">백설기</div>
-        <div class="product-name-en">Baekseolgi</div>
-        <p class="product-desc">백옥처럼 희고 부드러운 순수한 쌀가루 찜 떡</p>
-        <a href="products/baekseolgi.html" class="product-detail-link">상세 보기 →</a>
-      </div>
-    </div>
-    <div class="product-card reveal reveal-d2">
-      <img src="images/gyultteok.png" alt="꿀떡">
-      <div class="product-overlay">
-        <div class="product-name">꿀떡</div>
-        <div class="product-name-en">Gyultteok</div>
-        <p class="product-desc">꿀을 가득 품은 알록달록 한 입 크기 찹쌀 떡</p>
-        <a href="products/gyultteok.html" class="product-detail-link">상세 보기 →</a>
-      </div>
-      <span class="product-tag">NEW</span>
-    </div>
-    <div class="product-card reveal reveal-d3">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Korea_Chuseok_Songpyeon_01.jpg" alt="송편">
-      <div class="product-overlay">
-        <div class="product-name">송편</div>
-        <div class="product-name-en">Songpyeon</div>
-        <p class="product-desc">솔잎 향기로 찐 반달 모양의 추석 대표 떡</p>
-        <a href="products/songpyeon.html" class="product-detail-link">상세 보기 →</a>
-      </div>
-    </div>
-    <div class="product-card reveal reveal-d4">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg" alt="약식">
-      <div class="product-overlay">
-        <div class="product-name">약식</div>
-        <div class="product-name-en">Yaksik</div>
-        <p class="product-desc">잣·밤·대추를 품은 달콤 진한 찹쌀 영양 떡</p>
-        <a href="products/yaksik.html" class="product-detail-link">상세 보기 →</a>
-      </div>
-    </div>
-    <div class="product-card reveal reveal-d5">
-      <img src="images/ssuk-injeolmi.png" alt="쑥인절미" style="object-position:center 50%;">
-      <div class="product-overlay">
-        <div class="product-name">쑥인절미</div>
-        <div class="product-name-en">Ssuk Injeolmi</div>
-        <p class="product-desc">봄 쑥을 넣어 쫄깃하고 향긋한 초록빛 인절미</p>
-        <a href="products/ssuk-injeolmi.html" class="product-detail-link">상세 보기 →</a>
-      </div>
-      <span class="product-tag">봄 한정</span>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ DETAIL SPOTLIGHT ════════════ -->
-<section class="detail" id="detail">
-  <div class="detail-image-wrap reveal">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg" alt="약식 상세">
-  </div>
-  <div class="detail-content">
-    <span class="section-label reveal">SIGNATURE — 약식</span>
-    <h2 class="section-title reveal reveal-d1">달콤한 영양이<br>가득한 전통 별미</h2>
-    <div class="gold-line reveal reveal-d2"></div>
-    <p class="detail-desc reveal reveal-d2">찹쌀에 잣·밤·대추를 넣고 참기름과 간장, 흑설탕으로 깊은 맛을 더한 뒤 오랜 시간 쪄냅니다. 달콤하고 쫄깃한 식감 속에 견과류의 고소함이 어우러지는 한국의 대표 보양 떡입니다.</p>
-    <div class="ingredients-block reveal reveal-d3">
-      <h4>주요 재료</h4>
-      <div class="tag-list">
-        <span class="tag">국내산 찹쌀</span><span class="tag">밤</span><span class="tag">대추</span>
-        <span class="tag">잣</span><span class="tag">참기름</span><span class="tag">국간장</span><span class="tag">흑설탕</span>
-      </div>
-    </div>
-    <div class="ingredients-block reveal reveal-d4">
-      <h4>알레르기 정보</h4>
-      <div class="tag-list">
-        <span class="tag allergy">견과류(잣·밤) 함유</span>
-        <span class="tag allergy">대두(간장) 함유</span>
-        <span class="tag allergy">방부제 무첨가</span>
-      </div>
-    </div>
-    <div class="ingredients-block reveal reveal-d5">
-      <h4>보관 방법</h4>
-      <div class="tag-list">
-        <span class="tag allergy">당일 생산</span>
-        <span class="tag allergy">냉장 3일 이내</span>
-        <span class="tag allergy">냉동 30일</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ FOOTER ════════════ -->
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-brand-name">한결 떡방</div>
-      <div class="footer-brand-sub">HANGYEOL TTEOKBANG</div>
-      <p class="footer-brand-desc">1987년부터 이어온 전통 방식으로<br>매일 아침 신선하게 빚어내는 정직한 떡</p>
-    </div>
-    <div class="footer-col">
-      <h5>VISIT</h5>
-      <p>서울특별시 종로구<br>인사동 000번지</p>
-      <p style="margin-top:12px;">매일 09:00 – 18:00<br>연중무휴</p>
-    </div>
-    <div class="footer-col">
-      <h5>CONTACT</h5>
-      <a href="tel:02-0000-0000">Tel: 02-0000-0000</a>
-      <a href="mailto:hello@hangyeol.kr">hello@hangyeol.kr</a>
-      <p style="margin-top:12px;">카카오톡: @한결떡방</p>
-    </div>
-    <div class="footer-col">
-      <h5>NAVIGATE</h5>
-      <a href="#story">브랜드 스토리</a>
-      <a href="#products">제품 소개</a>
-      <a href="#detail">재료 & 성분</a>
-      <a href="#order">주문하기</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span class="footer-copy">© 2024 한결 떡방. All rights reserved.</span>
-    <span class="footer-cert">식품안전관리인증 HACCP | 사업자등록번호 000-00-00000</span>
-  </div>
-  <div style="padding:14px 80px;background:var(--brown-deep);border-top:1px solid rgba(255,255,255,0.04);">
-    <p style="font-size:10px;color:rgba(255,255,255,0.18);line-height:1.9;letter-spacing:0.04em;">
-      Photo credits — 인절미·백설기·꿀떡·쑥인절미: AI Generated (Google Gemini) &nbsp;|&nbsp;
-      송편: Ministry of Culture, Sports and Tourism (Korea), CC BY-SA 2.0 &nbsp;|&nbsp;
-      약식: Hyeon-Jeong Suk, CC BY 2.0
-    </p>
-  </div>
-</footer>
-
-<script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
-  const observer = new IntersectionObserver(
-    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
-    { threshold: 0.12 }
+    </header>
   );
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+/* ──────────────────────── HERO ──────────────────────── */
+function Hero() {
+  const imgs = [
+    { src:'images/injeolmi.png',   name:'인절미', pos:'center 40%' },
+    { src:'https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg', name:'약식', pos:'center' },
+    { src:'images/baekseolgi.png', name:'백설기', pos:'center' },
+    { src:'images/gyultteok.png',  name:'꿀떡',  pos:'center' },
+  ];
+  return (
+    <section className="grid grid-cols-1 lg:grid-cols-2 min-h-[52vh] pt-16 bg-ivory">
+      {/* Left */}
+      <div className="flex flex-col justify-center px-10 lg:px-24 py-12 space-y-5
+        bg-[#EDE5D6] relative overflow-hidden">
+        {/* 창살 패턴 */}
+        <div className="absolute inset-0 opacity-[0.07]"
+          style={{backgroundImage:`url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='%23A89070' stroke-width='1'/%3E%3C/svg%3E")`}}>
+        </div>
+        {/* 단청 세로 바 */}
+        <div className="absolute left-0 top-0 bottom-0 w-[7px] flex flex-col">
+          {['#B0291F','#1D4E8C','#2D6E5B','#C68A4C','#B0291F'].map((c,i)=>(
+            <div key={i} className="flex-1" style={{background:c}}/>
+          ))}
+        </div>
+        <div className="pl-3 space-y-4 relative z-10">
+          <div className="dancheong"/>
+          <p className="text-gold text-[10px] tracking-[0.35em] font-mono">
+            SINCE 1987 · 국내산 재료 100%
+          </p>
+          <h1 className="fs font-bold text-cbrown leading-tight"
+            style={{fontSize:'clamp(28px,3.5vw,50px)'}}>
+            정성으로 빚는<br/>
+            <span className="text-[#8B5E3C]">전통의 맛</span>
+          </h1>
+          <p className="text-stone-500 text-[15px] leading-relaxed">
+            자연에서 온 재료로, 손으로 빚은 한 입의 행복
+          </p>
+          <div className="flex gap-4 pt-1">
+            <a href="#products"
+              className="bg-gold text-white text-xs tracking-[0.18em] px-6 py-3
+                shadow hover:bg-gold-d transition-colors duration-300">
+              제품 보기
+            </a>
+            <a href="#story"
+              className="border border-stone-400 text-stone-600 text-xs tracking-[0.18em]
+                px-6 py-3 hover:border-gold hover:text-gold transition-colors duration-300">
+              브랜드 스토리
+            </a>
+          </div>
+        </div>
+      </div>
+      {/* Right – 2×2 product collage */}
+      <div className="grid grid-cols-2 gap-[3px] bg-[#C8BCA8]">
+        {imgs.map((img,i)=>(
+          <div key={i} className="relative overflow-hidden aspect-square group bg-[#E0D8C8]">
+            <img src={img.src} alt={img.name}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              style={{objectPosition:img.pos}}/>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent
+              opacity-0 group-hover:opacity-100 transition-opacity duration-400
+              flex items-end p-4">
+              <span className="fs text-white font-semibold text-lg">{img.name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────── BRAND / STORY ──────────────────────── */
+function Brand() {
+  const facts = [
+    { num:'37',  label:'년의 전통' },
+    { num:'100', label:'% 국내산'  },
+    { num:'0',   label:'방부제 첨가'},
+  ];
+  return (
+    <section id="story" className="relative py-24 overflow-hidden">
+      {/* BG: film strip image */}
+      <div className="absolute inset-0 bg-cover bg-center"
+        style={{backgroundImage:"url('images/story-bg.png')", backgroundPosition:'center 30%'}}/>
+      <div className="absolute inset-0"
+        style={{background:'linear-gradient(to right, rgba(14,9,4,0.88) 0%, rgba(14,9,4,0.72) 50%, rgba(14,9,4,0.84) 100%)'}}/>
+      <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-24
+        grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Left – story text */}
+        <div className="space-y-6 max-w-xl">
+          <p className="text-gold text-[10px] uppercase tracking-[0.3em] fs">OUR STORY</p>
+          <h2 className="fs font-bold text-white leading-tight"
+            style={{fontSize:'clamp(26px,3vw,40px)'}}>
+            세 대를 이어온<br/>떡의 철학
+          </h2>
+          <div className="gold-hr"/>
+          <p className="text-stone-300 text-sm leading-[2.1]">
+            한결 떡방은 1987년 할머니의 손맛에서 시작되었습니다.
+            인공 첨가물 없이 오직 국내산 찹쌀과 자연 재료만을 사용해 하루하루 직접 빚습니다.
+          </p>
+          <p className="text-stone-400 text-sm leading-[2.1]">
+            시대가 바뀌어도 변하지 않는 것은 단 하나, 정성입니다.
+            방부제 없이 당일 생산하며, 익일 새벽 배송을 원칙으로 합니다.
+          </p>
+        </div>
+        {/* Right – metrics */}
+        <div className="flex justify-around items-center
+          lg:border-l border-stone-700 lg:pl-12 py-8 gap-0">
+          {facts.map((f,i)=>(
+            <React.Fragment key={i}>
+              {i>0 && <div className="w-px h-14 bg-gold/25 flex-shrink-0"/>}
+              <div className="text-center px-8 space-y-2">
+                <div className="fp font-bold text-white" style={{fontSize:'3rem', lineHeight:1}}>{f.num}</div>
+                <div className="text-[11px] text-stone-400 tracking-[0.14em]">{f.label}</div>
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────── PROCESS / CRAFTSMANSHIP ──────────────────────── */
+function Process() {
+  const cards = [
+    { title:'근원', desc:'1987, 할머니의 손맛에서',      pos:'0%'   },
+    { title:'반죽', desc:'전통 방식의 제조 과정',         pos:'25%'  },
+    { title:'핵심', desc:'오직 천연 재료만 엄선',         pos:'50%'  },
+    { title:'형태', desc:'정성을 담은 장인 정신',         pos:'75%'  },
+    { title:'배송', desc:'당일 생산, 익일 새벽 배송',     pos:'100%' },
+  ];
+  return (
+    <section className="bg-cbrown py-24 px-8 lg:px-16">
+      <div className="text-center mb-16 space-y-3">
+        <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-mono">CRAFTSMANSHIP</p>
+        <h2 className="fs font-bold text-ivory" style={{fontSize:'clamp(18px,2.2vw,28px)'}}>
+          한결 떡방이 맛을 이어가는 과정
+        </h2>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-7xl mx-auto">
+        {cards.map((c,i)=>(
+          <div key={i}
+            className="bg-dbrown rounded-xl overflow-hidden border border-stone-800
+              shadow-2xl transition-all duration-300 hover:border-gold hover:-translate-y-1 group">
+            {/* Film strip panel */}
+            <div className="relative overflow-hidden card-img-film"
+              style={{aspectRatio:'3/4', backgroundPosition:`${c.pos} center`}}>
+              <div className="absolute inset-0 bg-gradient-to-t from-dbrown/80 via-transparent to-transparent
+                group-hover:from-dbrown/50 transition-all duration-500"/>
+            </div>
+            <div className="p-5 space-y-1.5 bg-dbrown">
+              <p className="fs font-semibold text-gold text-base">{c.title}</p>
+              <p className="text-stone-400 text-xs leading-relaxed">{c.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────── PRODUCTS ──────────────────────── */
+function Products() {
+  const items = [
+    { src:'images/injeolmi.png',   name:'인절미',   en:'Injeolmi',    desc:'볶은 콩가루를 넉넉히 입혀 고소하고 쫀득한 찹쌀 떡', href:'products/injeolmi.html',     badge:'BEST', pos:'center 40%' },
+    { src:'images/baekseolgi.png', name:'백설기',   en:'Baekseolgi',  desc:'백옥처럼 희고 부드러운 순수한 쌀가루 찜 떡',       href:'products/baekseolgi.html',   badge:'',    pos:'center' },
+    { src:'images/gyultteok.png',  name:'꿀떡',     en:'Gyultteok',   desc:'꿀을 가득 품은 알록달록 한 입 크기 찹쌀 떡',       href:'products/gyultteok.html',    badge:'NEW', pos:'center' },
+    { src:'https://upload.wikimedia.org/wikipedia/commons/0/09/Korea_Chuseok_Songpyeon_01.jpg',
+                                   name:'송편',     en:'Songpyeon',   desc:'솔잎 향기로 찐 반달 모양의 추석 대표 떡',           href:'products/songpyeon.html',    badge:'',    pos:'center' },
+    { src:'https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg',
+                                   name:'약식',     en:'Yaksik',      desc:'잣·밤·대추를 품은 달콤 진한 찹쌀 영양 떡',          href:'products/yaksik.html',       badge:'',    pos:'center' },
+    { src:'images/ssuk-injeolmi.png', name:'쑥인절미', en:'Ssuk Injeolmi', desc:'봄 쑥을 넣어 쫄깃하고 향긋한 초록빛 인절미', href:'products/ssuk-injeolmi.html', badge:'봄 한정', pos:'center' },
+  ];
+  return (
+    <section id="products" className="py-24 px-8 lg:px-16 bg-ivory">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-12">
+          <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-mono mb-3">PREMIUM SELECTION</p>
+          <h2 className="fs font-bold text-cbrown" style={{fontSize:'clamp(24px,3vw,40px)'}}>
+            엄선된 전통 떡
+          </h2>
+          <div className="w-12 h-px bg-gold mt-4"/>
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-[3px]">
+          {items.map((p,i)=>(
+            <a href={p.href} key={i}
+              className="relative overflow-hidden block group bg-[#E0D8C8]"
+              style={{aspectRatio:'4/5'}}>
+              <img src={p.src} alt={p.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                style={{objectPosition:p.pos}}/>
+              <div className="absolute inset-0"
+                style={{background:'linear-gradient(to top, rgba(20,13,5,.9) 0%, rgba(20,13,5,.08) 50%, transparent 100%)'}}/>
+              {p.badge && (
+                <span className="absolute top-4 right-4 bg-[#B0291F] text-white text-[10px]
+                  px-3 py-1 tracking-widest">{p.badge}</span>
+              )}
+              <div className="absolute bottom-0 left-0 right-0 p-6
+                translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
+                <p className="fs text-xl text-white font-semibold mb-1">{p.name}</p>
+                <p className="fp text-xs italic text-gold mb-2">{p.en}</p>
+                <p className="text-xs text-white/60 max-h-0 overflow-hidden
+                  group-hover:max-h-12 transition-all duration-300">{p.desc}</p>
+                <p className="text-[10px] tracking-[0.2em] text-gold/80 mt-2
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                  상세 보기 →
+                </p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────── DETAIL SPOTLIGHT ──────────────────────── */
+function Detail() {
+  const ingredients = ['국내산 찹쌀','밤','대추','잣','참기름','국간장','흑설탕'];
+  const storage = ['당일 생산','냉장 3일 이내','냉동 30일'];
+  return (
+    <section id="detail" className="grid grid-cols-1 lg:grid-cols-2 bg-dbrown"
+      style={{minHeight:'60vh'}}>
+      <div className="relative overflow-hidden">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Yaksik.jpg"
+          alt="약식" className="w-full h-full object-cover brightness-75"/>
+        <div className="absolute inset-0"
+          style={{background:'linear-gradient(to right, transparent 55%, #1E1611)'}}/>
+      </div>
+      <div className="flex flex-col justify-center px-10 lg:px-16 py-16 space-y-6">
+        <p className="text-gold text-[10px] tracking-[0.3em] uppercase font-mono">SIGNATURE — 약식</p>
+        <h2 className="fs font-bold text-white leading-tight" style={{fontSize:'clamp(24px,3vw,38px)'}}>
+          달콤한 영양이<br/>가득한 전통 별미
+        </h2>
+        <div className="gold-hr"/>
+        <p className="text-stone-400 text-sm leading-[2.1]">
+          찹쌀에 잣·밤·대추를 넣고 참기름과 간장, 흑설탕으로 깊은 맛을 더한 뒤 오랜 시간 쪄냅니다.
+          달콤하고 쫄깃한 식감 속에 견과류의 고소함이 어우러지는 한국의 대표 보양 떡입니다.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <p className="fs text-gold text-xs tracking-widest mb-3">주요 재료</p>
+            <div className="flex flex-wrap gap-2">
+              {ingredients.map(t=>(
+                <span key={t}
+                  className="border border-gold/35 text-white/75 text-xs px-4 py-1.5
+                    hover:border-gold hover:text-gold transition-colors cursor-default">{t}</span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="fs text-gold text-xs tracking-widest mb-3">보관 방법</p>
+            <div className="flex flex-wrap gap-2">
+              {storage.map(t=>(
+                <span key={t}
+                  className="border border-white/15 text-white/40 text-xs px-4 py-1.5">{t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────── FOOTER ──────────────────────── */
+function Footer() {
+  return (
+    <footer className="bg-dbrown border-t border-stone-800 py-16 px-8 lg:px-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
+        <div className="lg:col-span-2">
+          <p className="fs font-bold text-2xl text-white mb-1">한결 떡방</p>
+          <p className="text-[11px] tracking-[0.18em] text-stone-600 mb-6">HANGYEOL TTEOKBANG</p>
+          <p className="text-stone-400 text-sm leading-loose">
+            1987년부터 이어온 전통 방식으로<br/>
+            매일 아침 신선하게 빚어내는 정직한 떡
+          </p>
+        </div>
+        <div>
+          <p className="text-gold text-[10px] tracking-[0.25em] mb-5 font-mono">VISIT</p>
+          <p className="text-stone-400 text-sm leading-loose">서울특별시 종로구<br/>인사동 000번지</p>
+          <p className="text-stone-500 text-sm mt-3">매일 09:00 – 18:00 · 연중무휴</p>
+        </div>
+        <div>
+          <p className="text-gold text-[10px] tracking-[0.25em] mb-5 font-mono">CONTACT</p>
+          <p className="text-stone-400 text-sm leading-loose">Tel: 02-0000-0000</p>
+          <p className="text-stone-400 text-sm">hello@hangyeol.kr</p>
+          <p className="text-stone-500 text-sm mt-3">카카오톡: @한결떡방</p>
+        </div>
+      </div>
+      <div className="border-t border-stone-800 pt-8 flex flex-col lg:flex-row
+        justify-between items-start lg:items-center gap-3">
+        <p className="text-stone-700 text-xs">© 2024 한결 떡방. All rights reserved.</p>
+        <p className="text-stone-700 text-xs">식품안전관리인증 HACCP | 사업자등록번호 000-00-00000</p>
+      </div>
+      <p className="text-stone-800 text-[10px] leading-loose mt-6">
+        Photo credits — 인절미·백설기·꿀떡·쑥인절미: AI Generated (Google Gemini) &nbsp;|&nbsp;
+        송편: Ministry of Culture, Sports and Tourism (Korea), CC BY-SA 2.0 &nbsp;|&nbsp;
+        약식: Hyeon-Jeong Suk, CC BY 2.0
+      </p>
+    </footer>
+  );
+}
+
+/* ──────────────────────── APP ──────────────────────── */
+function App() {
+  return (
+    <>
+      <Header/>
+      <Hero/>
+      <Brand/>
+      <Process/>
+      <Products/>
+      <Detail/>
+      <Footer/>
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
 </script>
 </body>
 </html>
